@@ -18,7 +18,6 @@ namespace MineSweeper
             InitializeComponent();
             myGame = new Game(8,8,10);
             this.Controls.Add(myGame);
-
         }
     }
 }

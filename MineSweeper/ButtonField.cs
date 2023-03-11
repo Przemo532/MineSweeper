@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MineSweeper
 {
-    internal class ButtonField: Button
+    internal class ButtonField : Button
     {
-        private bool isBomb;
+        public ButtonField()
+        {
+            WasClicked = false;
+            IsBomb = false;
+            SurroundingCount = 0;
+        }
 
+        private bool isBomb;
         public bool IsBomb
         {
             get => isBomb;
@@ -33,15 +40,46 @@ namespace MineSweeper
         }
         private void prepareView()
         {
-            if (IsBomb)
+            if (!WasClicked)
             {
-                Text = "BB";
+                Text = "";
+                BackColor = Color.Gray;
             }
-            else if (SurroundingCount > 0)
+            else
             {
-                Text = SurroundingCount.ToString();
+                BackColor = Color.White;
+                if (IsBomb)
+                {
+                    Text = "BB";
+                    BackColor = Color.Red;
+                }
+                else if (SurroundingCount > 0)
+                {
+                    Text = SurroundingCount.ToString();
+                    BackColor = Color.Green;
+                }
+                else
+                {
+                    BackColor = Color.White;
+                }
             }
         }
-        //bool wasClicked = false;
+
+        private bool wasClicked = false;
+
+        public bool WasClicked
+        {
+            get => wasClicked;
+            set 
+            {
+                wasClicked = value;
+                if (wasClicked)
+                {
+                    Enabled = false;
+                }
+                prepareView();
+            }
+        }
+        
     }
 }
